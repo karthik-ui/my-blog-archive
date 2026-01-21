@@ -29,7 +29,6 @@ export class SignupComponent implements OnInit {
   }
 
   ngOnInit() {
-    // Redirect to posts if already logged in
     if (this.auth.isAuthenticated) {
       this.router.navigate(['/posts']);
     }
@@ -65,7 +64,6 @@ export class SignupComponent implements OnInit {
         this.submitSuccess = true;
         this.submitError = '';
         
-        // Redirect to posts after 1.5 seconds
         setTimeout(() => {
           this.router.navigate(['/posts']);
         }, 1500);

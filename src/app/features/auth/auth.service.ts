@@ -15,7 +15,6 @@ export class AuthService {
   private _user$ = new BehaviorSubject<User | null>(this.loadUser());
   user$ = this._user$.asObservable();
 
-  // Demo user credentials
   private demoUser: User = {
     username: 'demo',
     password: 'demo123',
@@ -23,11 +22,9 @@ export class AuthService {
     lastName: 'User',
   };
 
-  // Inject comments service to clear on logout
   private commentsService = inject(CommentsService);
 
   constructor() {
-    // Initialize demo user if not already registered
     this.initializeDemoUser();
   }
 
@@ -73,8 +70,6 @@ export class AuthService {
     sessionStorage.clear();
     this.commentsService.clearLocalComments();
     this._user$.next(null);
-    
-    // Reinitialize demo user for next login
     this.initializeDemoUser();
   }
 

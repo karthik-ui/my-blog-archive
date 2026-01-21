@@ -9,7 +9,7 @@ export interface Comment {
   name: string;
   email: string;
   body: string;
-  isLocal?: boolean; // Flag to indicate locally added comments
+  isLocal?: boolean;
 }
 
 @Injectable({ providedIn: 'root' })

@@ -31,7 +31,6 @@ export class PostsService {
       tap(post => console.log('[PostsService] Post fetched:', post)),
       catchError(err => {
         console.error('[PostsService] Error fetching post:', err);
-        // Fallback mock data if API fails
         return of({
           id: id,
           title: `Post #${id}`,

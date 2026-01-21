@@ -35,7 +35,6 @@ export class PostDetailsComponent implements OnInit {
       return;
     }
     
-    // Load post details
     this.postsService.getById(this.postId).subscribe({
       next: (post) => {
         console.log('✓ Post loaded successfully:', post);
@@ -51,7 +50,6 @@ export class PostDetailsComponent implements OnInit {
       }
     });
 
-    // Load comments (API + local)
     this.commentsService.load(this.postId).subscribe({
       next: (comments) => {
         console.log('✓ Comments loaded successfully:', comments);
@@ -65,7 +63,6 @@ export class PostDetailsComponent implements OnInit {
       }
     });
     
-    // Add timeout safety - if still loading after 5 seconds, force it to hide
     setTimeout(() => {
       if (this.loading) {
         console.warn('Post loading timeout - hiding loading state');

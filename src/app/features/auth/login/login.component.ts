@@ -29,7 +29,6 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    // Redirect to posts if already logged in
     if (this.auth.isAuthenticated) {
       this.router.navigate(['/posts']);
     }

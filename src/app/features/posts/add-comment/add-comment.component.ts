@@ -48,7 +48,6 @@ export class AddCommentComponent {
       return;
     }
 
-    // Validate form
     if (!this.form.valid) {
       this.error = 'Please enter a comment (minimum 10 characters).';
       return;
