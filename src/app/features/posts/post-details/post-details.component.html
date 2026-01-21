@@ -1,96 +1,102 @@
-<div class="post-details-container">
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
   <!-- Back Button -->
-  <div class="back-button">
-    <a routerLink="/posts" class="back-link">
-      <span class="icon">←</span>
+  <div class="mb-6">
+    <a routerLink="/posts" class="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors">
+      <span class="mr-2">←</span>
       Back to Posts
     </a>
   </div>
 
   <!-- Post Content -->
-  <div *ngIf="loading" class="post-loading">
-    <div class="skeleton-header"></div>
-    <div class="skeleton-body"></div>
+  <div *ngIf="loading" class="bg-white rounded-lg shadow-md p-8 animate-pulse">
+    <div class="h-8 bg-gray-200 rounded mb-4"></div>
+    <div class="h-4 bg-gray-200 rounded mb-2"></div>
+    <div class="h-4 bg-gray-200 rounded mb-2"></div>
+    <div class="h-4 bg-gray-200 rounded w-3/4"></div>
   </div>
 
-  <div *ngIf="!loading && post" class="post-content">
-    <article class="post-article">
-      <header class="post-header">
-        <h1 class="post-title">{{ post.title }}</h1>
-        <div class="post-meta">
-          <span class="meta-item">
-            <span class="meta-icon">📝</span>
+  <div *ngIf="!loading && post" class="bg-white rounded-lg shadow-md overflow-hidden mb-8">
+    <article class="p-8">
+      <header class="mb-6">
+        <h1 class="text-3xl font-bold text-gray-900 mb-4">{{ post.title }}</h1>
+        <div class="flex items-center space-x-4 text-sm text-gray-600">
+          <span class="flex items-center">
+            <span class="mr-1">📝</span>
             Post #{{ postId }}
           </span>
-          <span class="meta-item">
-            <span class="meta-icon">👤</span>
+          <span class="flex items-center">
+            <span class="mr-1">👤</span>
             By User #{{ post.userId }}
           </span>
         </div>
       </header>
 
-      <div class="post-body">
+      <div class="prose prose-lg max-w-none mb-8">
         {{ post.body }}
       </div>
 
-      <div class="post-actions">
-        <a [routerLink]="['/posts', postId, 'comment']" class="btn-add-comment">
-          <span class="btn-icon">💬</span>
+      <div class="border-t pt-6">
+        <a [routerLink]="['/posts', postId, 'comment']" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
+          <span class="mr-2">💬</span>
           Add Comment
         </a>
       </div>
     </article>
   </div>
 
-  <div *ngIf="!loading && !post" class="post-error">
-    <p>Post not found</p>
+  <div *ngIf="!loading && !post" class="text-center py-12">
+    <p class="text-gray-500 text-lg">Post not found</p>
   </div>
 
   <!-- Comments Section -->
-  <section class="comments-section">
-    <h2 class="comments-title">
-      <span class="comments-icon">💬</span>
+  <section class="bg-white rounded-lg shadow-md p-8">
+    <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center">
+      <span class="mr-2">💬</span>
       Comments ({{ comments.length }})
     </h2>
 
     <!-- Loading State -->
-    <div *ngIf="loading" class="comments-loading">
-      <div class="comment-skeleton" *ngFor="let item of [1, 2, 3]">
-        <div class="skeleton-avatar"></div>
-        <div class="skeleton-content">
-          <div class="skeleton-name"></div>
-          <div class="skeleton-body"></div>
+    <div *ngIf="loading" class="space-y-4">
+      <div class="flex space-x-4" *ngFor="let item of [1, 2, 3]">
+        <div class="w-10 h-10 bg-gray-200 rounded-full animate-pulse"></div>
+        <div class="flex-1 space-y-2">
+          <div class="h-4 bg-gray-200 rounded animate-pulse"></div>
+          <div class="h-4 bg-gray-200 rounded w-3/4 animate-pulse"></div>
         </div>
       </div>
     </div>
 
     <!-- Comments List -->
-    <div *ngIf="!loading" class="comments-list">
-      <article 
+    <div *ngIf="!loading" class="space-y-6">
+      <article
         *ngFor="let comment of comments; trackBy: trackBy"
-        class="comment"
-        [class.local-comment]="comment.isLocal">
-        <div class="comment-header">
-          <div class="comment-avatar">
+        class="flex space-x-4 p-4 rounded-lg border"
+        [class]="comment.isLocal ? 'bg-green-50 border-green-200' : 'bg-gray-50 border-gray-200'">
+        <div class="flex-shrink-0">
+          <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-semibold">
             {{ comment.name[0] }}
           </div>
-          <div class="comment-user-info">
-            <h4 class="comment-name">{{ comment.name }}</h4>
-            <p class="comment-email">{{ comment.email }}</p>
-            <span *ngIf="comment.isLocal" class="badge-new">Just added</span>
-          </div>
         </div>
-        <div class="comment-body">
-          {{ comment.body }}
+        <div class="flex-1">
+          <div class="flex items-center space-x-2 mb-2">
+            <h4 class="font-semibold text-gray-900">{{ comment.name }}</h4>
+            <p class="text-sm text-gray-600">{{ comment.email }}</p>
+            <span *ngIf="comment.isLocal" class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+              Just added
+            </span>
+          </div>
+          <div class="text-gray-700">
+            {{ comment.body }}
+          </div>
         </div>
       </article>
 
       <!-- Empty State -->
-      <div *ngIf="comments.length === 0" class="empty-comments">
-        <div class="empty-icon">💭</div>
-        <h3>No comments yet</h3>
-        <p>Be the first to comment on this post!</p>
-        <a [routerLink]="['/posts', postId, 'comment']" class="btn-primary-empty">
+      <div *ngIf="comments.length === 0" class="text-center py-12">
+        <div class="text-6xl mb-4">💭</div>
+        <h3 class="text-xl font-semibold text-gray-900 mb-2">No comments yet</h3>
+        <p class="text-gray-600 mb-6">Be the first to comment on this post!</p>
+        <a [routerLink]="['/posts', postId, 'comment']" class="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors">
           Add Comment
         </a>
       </div>

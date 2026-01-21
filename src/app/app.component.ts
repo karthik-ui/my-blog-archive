@@ -7,6 +7,5 @@ import { NavbarComponent } from './shared/components/navbar.component';
   standalone: true,
   imports: [RouterModule, NavbarComponent],
   templateUrl: './app.html',
-  styleUrls: ['./app.scss'],
 })
 export class AppComponent {}

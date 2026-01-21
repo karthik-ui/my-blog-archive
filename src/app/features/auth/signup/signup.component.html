@@ -1,153 +1,158 @@
-<div class="auth-container">
-  <div class="auth-card signup-card">
-    <div class="auth-header">
-      <h1 class="auth-title">
-        <span class="icon">🎉</span>
+<div class="flex justify-center items-center min-h-screen p-4">
+  <div class="bg-white rounded-lg p-6 max-w-md w-full shadow-lg">
+    <div class="text-center mb-6">
+      <h1 class="text-2xl font-bold mb-2">
+        <span class="mr-2">🎉</span>
         Create Your Account
       </h1>
-      <p class="auth-subtitle">Join our community and start sharing your thoughts</p>
+      <p class="text-gray-600">Join our community and start sharing your thoughts</p>
     </div>
 
-    <form [formGroup]="form" (ngSubmit)="submit()" class="auth-form">
+    <form [formGroup]="form" (ngSubmit)="submit()" class="space-y-4">
       <!-- Success Message -->
-      <div *ngIf="submitSuccess" class="alert alert-success">
-        <span class="icon">✓</span>
-        <span>Account created successfully! Redirecting...</span>
+      <div *ngIf="submitSuccess" class="bg-green-50 border border-green-200 rounded-md p-3">
+        <span class="mr-2">✓</span>
+        <span class="text-green-800">Account created successfully! Redirecting...</span>
       </div>
 
       <!-- Error Message -->
-      <div *ngIf="submitError" class="alert alert-error">
-        <span class="icon">⚠️</span>
-        <span>{{ submitError }}</span>
+      <div *ngIf="submitError" class="bg-red-50 border border-red-200 rounded-md p-3">
+        <span class="mr-2">⚠️</span>
+        <span class="text-red-800">{{ submitError }}</span>
       </div>
 
       <!-- First Name Field -->
-      <div class="form-group">
-        <label for="firstName" class="form-label">First Name</label>
-        <div class="input-wrapper">
-          <span class="input-icon">👤</span>
+      <div class="space-y-2">
+        <label for="firstName" class="block text-sm font-medium text-gray-700">First Name</label>
+        <div class="relative">
+          <span class="absolute left-3 top-1/2 transform -translate-y-1/2">👤</span>
           <input
+            hlmInput
             id="firstName"
             type="text"
             formControlName="firstName"
             placeholder="John"
-            class="form-input"
-            [class.error]="form.get('firstName')?.invalid && form.get('firstName')?.touched" />
+            class="pl-10 w-full"
+            [class]="form.get('firstName')?.invalid && form.get('firstName')?.touched ? 'border-red-500' : ''" />
         </div>
         <div
           *ngIf="form.get('firstName')?.touched"
-          class="error-text">
+          class="text-red-600 text-sm">
           {{ getErrorMessage('firstName') }}
         </div>
       </div>
 
       <!-- Last Name Field -->
-      <div class="form-group">
-        <label for="lastName" class="form-label">Last Name</label>
-        <div class="input-wrapper">
-          <span class="input-icon">👤</span>
+      <div class="space-y-2">
+        <label for="lastName" class="block text-sm font-medium text-gray-700">Last Name</label>
+        <div class="relative">
+          <span class="absolute left-3 top-1/2 transform -translate-y-1/2">👤</span>
           <input
+            hlmInput
             id="lastName"
             type="text"
             formControlName="lastName"
             placeholder="Doe"
-            class="form-input"
-            [class.error]="form.get('lastName')?.invalid && form.get('lastName')?.touched" />
+            class="pl-10 w-full"
+            [class]="form.get('lastName')?.invalid && form.get('lastName')?.touched ? 'border-red-500' : ''" />
         </div>
         <div
           *ngIf="form.get('lastName')?.touched"
-          class="error-text">
+          class="text-red-600 text-sm">
           {{ getErrorMessage('lastName') }}
         </div>
       </div>
 
       <!-- Username Field -->
-      <div class="form-group">
-        <label for="username" class="form-label">Username</label>
-        <div class="input-wrapper">
-          <span class="input-icon">@</span>
+      <div class="space-y-2">
+        <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+        <div class="relative">
+          <span class="absolute left-3 top-1/2 transform -translate-y-1/2">@</span>
           <input
+            hlmInput
             id="username"
             type="text"
             formControlName="username"
             placeholder="johndoe"
-            class="form-input"
-            [class.error]="form.get('username')?.invalid && form.get('username')?.touched" />
+            class="pl-10 w-full"
+            [class]="form.get('username')?.invalid && form.get('username')?.touched ? 'border-red-500' : ''" />
         </div>
         <div
           *ngIf="form.get('username')?.touched"
-          class="error-text">
+          class="text-red-600 text-sm">
           {{ getErrorMessage('username') }}
         </div>
       </div>
 
       <!-- Password Field -->
-      <div class="form-group">
-        <label for="password" class="form-label">Password</label>
-        <div class="input-wrapper">
-          <span class="input-icon">🔑</span>
+      <div class="space-y-2">
+        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+        <div class="relative">
+          <span class="absolute left-3 top-1/2 transform -translate-y-1/2">🔑</span>
           <input
+            hlmInput
             id="password"
             type="password"
             formControlName="password"
             placeholder="At least 6 characters"
-            class="form-input"
-            [class.error]="form.get('password')?.invalid && form.get('password')?.touched" />
+            class="pl-10 w-full"
+            [class]="form.get('password')?.invalid && form.get('password')?.touched ? 'border-red-500' : ''" />
         </div>
         <div
           *ngIf="form.get('password')?.touched"
-          class="error-text">
+          class="text-red-600 text-sm">
           {{ getErrorMessage('password') }}
         </div>
       </div>
 
       <!-- Password Confirm Field -->
-      <div class="form-group">
-        <label for="passwordConfirm" class="form-label">Confirm Password</label>
-        <div class="input-wrapper">
-          <span class="input-icon">🔐</span>
+      <div class="space-y-2">
+        <label for="passwordConfirm" class="block text-sm font-medium text-gray-700">Confirm Password</label>
+        <div class="relative">
+          <span class="absolute left-3 top-1/2 transform -translate-y-1/2">🔐</span>
           <input
+            hlmInput
             id="passwordConfirm"
             type="password"
             formControlName="passwordConfirm"
             placeholder="Re-enter your password"
-            class="form-input"
-            [class.error]="(form.get('passwordConfirm')?.invalid && form.get('passwordConfirm')?.touched) || passwordMismatchError" />
+            class="pl-10 w-full"
+            [class]="(form.get('passwordConfirm')?.invalid && form.get('passwordConfirm')?.touched) || passwordMismatchError ? 'border-red-500' : ''" />
         </div>
         <div
           *ngIf="form.get('passwordConfirm')?.touched"
-          class="error-text">
+          class="text-red-600 text-sm">
           {{ getErrorMessage('passwordConfirm') }}
         </div>
         <div
           *ngIf="passwordMismatchError"
-          class="error-text">
+          class="text-red-600 text-sm">
           Passwords do not match
         </div>
       </div>
 
       <!-- Submit Button -->
-      <button type="submit" class="btn-submit" [disabled]="!form.valid || submitSuccess">
-        <span class="btn-icon" *ngIf="!submitSuccess">✓</span>
-        <span class="btn-icon" *ngIf="submitSuccess">⟳</span>
+      <button hlmBtn type="submit" class="w-full" [disabled]="!form.valid || submitSuccess">
+        <span class="mr-2" *ngIf="!submitSuccess">✓</span>
+        <span class="mr-2" *ngIf="submitSuccess">⟳</span>
         {{ submitSuccess ? 'Creating account...' : 'Create Account' }}
       </button>
     </form>
 
     <!-- Login Link -->
-    <div class="auth-footer">
+    <div class="text-center mt-6">
       <p>
         Already have an account?
-        <a routerLink="/auth/login" class="auth-link">Login here</a>
+        <a routerLink="/auth/login" class="text-blue-600 hover:text-blue-800 ml-1">Login here</a>
       </p>
     </div>
 
     <!-- Requirements -->
-    <div class="requirements">
-      <p class="requirements-title">Password Requirements:</p>
-      <ul>
-        <li>At least 6 characters long</li>
-        <li>Must match confirmation password</li>
+    <div class="mt-6 p-4 bg-gray-50 rounded-md">
+      <p class="text-sm font-medium text-gray-700 mb-2">Password Requirements:</p>
+      <ul class="text-sm text-gray-600 space-y-1">
+        <li>• At least 6 characters long</li>
+        <li>• Must match confirmation password</li>
       </ul>
     </div>
   </div>

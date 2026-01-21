@@ -9,7 +9,6 @@ import { trackById } from 'src/app/shared/utils/track-by';
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './albums-grid.component.html',
-  styleUrls: ['./albums-grid.component.scss'],
 })
 export class AlbumsGridComponent {
   private albumsService = inject(AlbumsService);

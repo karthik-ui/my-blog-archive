@@ -1,6 +1,10 @@
-<h2>Albums</h2>
-<div class="grid">
-  <div *ngFor="let album of albums; trackBy: trackBy">
-    <a [routerLink]="['/albums', album.id]">{{ album.title }}</a>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <h2 class="text-3xl font-bold text-gray-900 mb-8">Albums</h2>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    <div *ngFor="let album of albums; trackBy: trackBy" class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 p-6">
+      <a [routerLink]="['/albums', album.id]" class="block text-blue-600 hover:text-blue-800 font-medium">
+        {{ album.title }}
+      </a>
+    </div>
   </div>
 </div>

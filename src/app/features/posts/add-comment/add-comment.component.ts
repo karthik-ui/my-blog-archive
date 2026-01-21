@@ -11,7 +11,6 @@ import { PostsService } from '../posts.service';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './add-comment.component.html',
-  styleUrls: ['./add-comment.component.scss'],
 })
 export class AddCommentComponent {
   private fb = inject(FormBuilder);

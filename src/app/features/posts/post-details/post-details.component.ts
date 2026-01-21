@@ -10,7 +10,6 @@ import { trackById } from 'src/app/shared/utils/track-by';
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './post-details.component.html',
-  styleUrls: ['./post-details.component.scss'],
 })
 export class PostDetailsComponent implements OnInit {
   private route = inject(ActivatedRoute);

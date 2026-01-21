@@ -1,70 +1,79 @@
-<div class="posts-container">
-  <div class="posts-header">
-    <h1 class="posts-title">Blog Archive</h1>
-    <p class="posts-subtitle">Discover amazing articles and stories</p>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="text-center mb-12">
+    <h1 class="text-4xl font-bold text-gray-900 mb-4">Blog Archive</h1>
+    <p class="text-xl text-gray-600">Discover amazing articles and stories</p>
   </div>
 
   <!-- Loading State -->
-  <div *ngIf="!(posts$ | async); else postsList" class="loading-skeleton">
-    <div *ngFor="let item of [1, 2, 3, 4, 5]" class="skeleton-card">
-      <div class="skeleton-header"></div>
-      <div class="skeleton-body"></div>
-      <div class="skeleton-footer"></div>
+  <div *ngIf="!(posts$ | async); else postsList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div *ngFor="let item of [1, 2, 3, 4, 5, 6]" class="bg-white rounded-lg shadow-md p-6 animate-pulse">
+      <div class="h-4 bg-gray-200 rounded mb-4"></div>
+      <div class="h-6 bg-gray-200 rounded mb-3"></div>
+      <div class="h-4 bg-gray-200 rounded mb-2"></div>
+      <div class="h-4 bg-gray-200 rounded w-3/4 mb-4"></div>
+      <div class="h-3 bg-gray-200 rounded w-1/2"></div>
     </div>
   </div>
 
   <ng-template #postsList>
     <!-- Posts Grid -->
-    <div class="posts-grid">
-      <article 
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+      <article
         *ngFor="let post of posts$ | async; trackBy: trackBy"
-        class="post-card"
+        class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 overflow-hidden"
         [attr.data-post-id]="post.id">
-        <div class="post-header">
-          <div class="post-badge">Article</div>
-          <span class="post-id">#{{ post.id }}</span>
-        </div>
-        <h2 class="post-title">
-          <a [routerLink]="['/posts', post.id]" class="post-link">
-            {{ post.title }}
-          </a>
-        </h2>
-        <p class="post-body">{{ post.body | slice:0:150 }}...</p>
-        <div class="post-footer">
-          <div class="post-meta">
-            <span class="meta-icon">📝</span>
-            <span class="meta-text">Post by User #{{ post.userId }}</span>
+        <div class="p-6">
+          <div class="flex justify-between items-center mb-4">
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+              Article
+            </span>
+            <span class="text-sm text-gray-500">#{{ post.id }}</span>
           </div>
-          <a [routerLink]="['/posts', post.id]" class="read-more">
-            Read More
-            <span class="arrow">→</span>
-          </a>
+
+          <h2 class="text-xl font-semibold text-gray-900 mb-3 line-clamp-2">
+            <a [routerLink]="['/posts', post.id]" class="hover:text-blue-600 transition-colors">
+              {{ post.title }}
+            </a>
+          </h2>
+
+          <p class="text-gray-600 mb-4 line-clamp-3">{{ post.body | slice:0:150 }}...</p>
+
+          <div class="flex justify-between items-center">
+            <div class="flex items-center text-sm text-gray-500">
+              <span class="mr-2">📝</span>
+              <span>Post by User #{{ post.userId }}</span>
+            </div>
+            <a [routerLink]="['/posts', post.id]" class="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors font-medium">
+              Read More
+              <span class="ml-1">→</span>
+            </a>
+          </div>
         </div>
       </article>
     </div>
 
     <!-- Pagination -->
-    <div class="pagination-container">
-      <button 
-        class="pagination-btn prev-btn"
-        (click)="prev()" 
+    <div class="flex justify-center items-center space-x-4">
+      <button
+        class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        (click)="prev()"
         [disabled]="page === 1"
         aria-label="Previous page">
-        <span class="arrow-icon">←</span>
-        <span class="btn-text">Previous</span>
+        <span class="mr-2">←</span>
+        <span>Previous</span>
       </button>
 
-      <div class="pagination-info">
-        <span class="page-number">Page: <span [textContent]="page"></span></span>
-        <span class="total-info">Showing 10 posts per page</span>
+      <div class="flex items-center space-x-4 text-sm text-gray-700">
+        <span>Page: <span class="font-semibold">{{ page }}</span></span>
+        <span>Showing 10 posts per page</span>
       </div>
 
-      <button 
-        class="pagination-btn next-btn"
+      <button
+        class="flex items-center px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
         (click)="next()"
         aria-label="Next page">
-        <span class="btn-text">Next</span>
-        <span class="arrow-icon">→</span>
+        <span class="mr-2">Next</span>
+        <span>→</span>
       </button>
     </div>
   </ng-template>

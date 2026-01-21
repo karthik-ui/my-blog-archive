@@ -9,7 +9,6 @@ import { trackById } from 'src/app/shared/utils/track-by';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './album-photos.component.html',
-  styleUrls: ['./album-photos.component.scss'],
 })
 export class AlbumPhotosComponent {
   private route = inject(ActivatedRoute);

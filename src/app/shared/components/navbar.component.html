@@ -1,58 +1,105 @@
-<nav class="navbar" role="navigation" aria-label="Main navigation">
-  <div class="navbar-container">
-    <!-- Brand/Logo -->
-    <div class="navbar-brand">
-      <a routerLink="/posts" class="logo">
-        <span class="logo-icon">📝</span>
-        <span class="logo-text">BlogArchive</span>
-      </a>
-    </div>
-
-    <!-- Hamburger Menu -->
-    <button 
-      class="hamburger" 
-      [class.active]="isOpen"
-      (click)="toggleMenu()"
-      aria-label="Toggle navigation"
-      aria-expanded="isOpen"
-      aria-controls="navbarMenu">
-      <span class="hamburger-line"></span>
-      <span class="hamburger-line"></span>
-      <span class="hamburger-line"></span>
-    </button>
-
-    <!-- Navigation Links -->
-    <div class="navbar-menu" [class.active]="isOpen" id="navbarMenu">
-      <div class="navbar-nav">
-        <a routerLink="/posts" routerLinkActive="active" (click)="isOpen = false" class="nav-link">
-          <span class="nav-icon">📄</span>
-          Posts
+<nav class="bg-white shadow-md border-b border-gray-200" role="navigation" aria-label="Main navigation">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <!-- Brand/Logo -->
+      <div class="flex-shrink-0">
+        <a routerLink="/posts" class="flex items-center space-x-2 text-xl font-bold text-gray-900 hover:text-blue-600 transition-colors">
+          <span>📝</span>
+          <span>BlogArchive</span>
         </a>
       </div>
 
-      <!-- User Section -->
-      <div class="navbar-user">
-        <div *ngIf="(user$ | async) as user; else notLoggedIn" class="user-menu">
-          <div class="user-info">
-            <div class="avatar">{{ getUserInitials() }}</div>
-            <div class="user-details">
-              <span class="user-name">{{ user.firstName }} {{ user.lastName }}</span>
-              <span class="user-handle">@{{ user.username }}</span>
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex items-center space-x-8">
+        <a routerLink="/posts" routerLinkActive="text-blue-600" class="flex items-center space-x-2 text-gray-700 hover:text-blue-600 transition-colors">
+          <span>📄</span>
+          <span>Posts</span>
+        </a>
+      </div>
+
+      <!-- Desktop User Section -->
+      <div class="hidden md:flex items-center space-x-4">
+        <div *ngIf="(user$ | async) as user; else desktopNotLoggedIn" class="flex items-center space-x-4">
+          <div class="flex items-center space-x-3">
+            <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-semibold">
+              {{ getUserInitials() }}
+            </div>
+            <div class="text-sm">
+              <div class="font-medium text-gray-900">{{ user.firstName }} {{ user.lastName }}</div>
+              <div class="text-gray-500">@{{ user.username }}</div>
             </div>
           </div>
-          <button (click)="logout()" class="btn-logout">
-            <span class="logout-icon">🚪</span>
-            Logout
+          <button (click)="logout()" class="flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 hover:text-red-600 transition-colors">
+            <span>🚪</span>
+            <span>Logout</span>
           </button>
         </div>
 
-        <ng-template #notLoggedIn>
-          <div class="auth-links">
-            <a routerLink="/auth/login" routerLinkActive="active" (click)="isOpen = false" class="btn-secondary">
+        <ng-template #desktopNotLoggedIn>
+          <div class="flex items-center space-x-3">
+            <a routerLink="/auth/login" routerLinkActive="text-blue-600" class="text-gray-700 hover:text-blue-600 transition-colors">
               Login
             </a>
-            <a routerLink="/auth/signup" routerLinkActive="active" (click)="isOpen = false" class="btn-primary">
+            <a routerLink="/auth/signup" routerLinkActive="bg-blue-700" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors">
               Sign Up
+            </a>
+          </div>
+        </ng-template>
+      </div>
+
+      <!-- Mobile menu button -->
+      <div class="md:hidden">
+        <button
+          class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500"
+          [class]="isOpen ? 'bg-gray-100' : ''"
+          (click)="toggleMenu()"
+          aria-label="Toggle navigation"
+          aria-expanded="isOpen"
+          aria-controls="mobile-menu">
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path *ngIf="!isOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            <path *ngIf="isOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div class="md:hidden" [class]="isOpen ? 'block' : 'hidden'" id="mobile-menu">
+      <div class="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-200">
+        <a routerLink="/posts" routerLinkActive="bg-blue-50 text-blue-600" (click)="isOpen = false" class="flex items-center space-x-3 px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-blue-600 rounded-md">
+          <span>📄</span>
+          <span>Posts</span>
+        </a>
+      </div>
+
+      <!-- Mobile User Section -->
+      <div class="pt-4 pb-3 border-t border-gray-200">
+        <div *ngIf="(user$ | async) as user; else mobileNotLoggedIn" class="px-2 space-y-3">
+          <div class="flex items-center space-x-3 px-3">
+            <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-semibold">
+              {{ getUserInitials() }}
+            </div>
+            <div>
+              <div class="text-base font-medium text-gray-900">{{ user.firstName }} {{ user.lastName }}</div>
+              <div class="text-sm text-gray-500">@{{ user.username }}</div>
+            </div>
+          </div>
+          <button (click)="logout()" class="flex items-center space-x-3 w-full px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-red-600 rounded-md">
+            <span>🚪</span>
+            <span>Logout</span>
+          </button>
+        </div>
+
+        <ng-template #mobileNotLoggedIn>
+          <div class="px-2 space-y-3">
+            <a routerLink="/auth/login" routerLinkActive="bg-blue-50 text-blue-600" (click)="isOpen = false" class="flex items-center space-x-3 px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-blue-600 rounded-md">
+              <span>🔐</span>
+              <span>Login</span>
+            </a>
+            <a routerLink="/auth/signup" routerLinkActive="bg-blue-700" (click)="isOpen = false" class="flex items-center justify-center px-3 py-2 text-base font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-md">
+              <span>🎉</span>
+              <span class="ml-2">Sign Up</span>
             </a>
           </div>
         </ng-template>

@@ -1,50 +1,54 @@
-<div class="add-comment-container">
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
   <!-- Back Button -->
-  <a href="javascript:void(0)" (click)="cancel()" class="back-link">
-    <span class="icon">←</span>
-    Back to Post
-  </a>
+  <div class="mb-6">
+    <a href="javascript:void(0)" (click)="cancel()" class="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors">
+      <span class="mr-2">←</span>
+      Back to Post
+    </a>
+  </div>
 
   <!-- Post Context -->
-  <div *ngIf="post" class="post-context">
-    <p class="context-label">Commenting on:</p>
-    <h2 class="post-title">{{ post.title }}</h2>
+  <div *ngIf="post" class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
+    <p class="text-sm font-medium text-blue-800 mb-2">Commenting on:</p>
+    <h2 class="text-xl font-semibold text-gray-900">{{ post.title }}</h2>
   </div>
 
   <!-- Add Comment Form -->
-  <div class="comment-form-wrapper">
-    <h1 class="form-title">
-      <span class="icon">💬</span>
-      Share Your Thoughts
-    </h1>
-    <p class="form-subtitle">Your comment will appear at the top of the comments section</p>
+  <div class="bg-white rounded-lg shadow-md p-8">
+    <div class="text-center mb-6">
+      <h1 class="text-3xl font-bold text-gray-900 mb-2">
+        <span class="mr-2">💬</span>
+        Share Your Thoughts
+      </h1>
+      <p class="text-gray-600">Your comment will appear at the top of the comments section</p>
+    </div>
 
-    <form [formGroup]="form" (ngSubmit)="submit()" class="comment-form">
+    <form [formGroup]="form" (ngSubmit)="submit()" class="space-y-6">
       <!-- Error Message -->
-      <div *ngIf="error" class="alert alert-error" @slideDown>
-        <span class="alert-icon">⚠️</span>
-        <span class="alert-message">{{ error }}</span>
+      <div *ngIf="error" class="bg-red-50 border border-red-200 rounded-md p-4 animate-in slide-in-from-top-2">
+        <span class="mr-2">⚠️</span>
+        <span class="text-red-800">{{ error }}</span>
       </div>
 
       <!-- Success Message -->
-      <div *ngIf="success" class="alert alert-success" @slideDown>
-        <span class="alert-icon">✓</span>
-        <span class="alert-message">{{ success }}</span>
+      <div *ngIf="success" class="bg-green-50 border border-green-200 rounded-md p-4 animate-in slide-in-from-top-2">
+        <span class="mr-2">✓</span>
+        <span class="text-green-800">{{ success }}</span>
       </div>
 
       <!-- Textarea -->
-      <div class="form-group">
-        <label for="body" class="form-label">Your Comment</label>
+      <div class="space-y-2">
+        <label for="body" class="block text-sm font-medium text-gray-700">Your Comment</label>
         <textarea
           id="body"
           formControlName="body"
           placeholder="Share your thoughts about this post... (minimum 10 characters)"
-          class="form-textarea"
-          [class.error]="form.get('body')?.invalid && form.get('body')?.touched"
+          class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-vertical"
+          [class]="form.get('body')?.invalid && form.get('body')?.touched ? 'border-red-500 focus:ring-red-500 focus:border-red-500' : ''"
           rows="8"></textarea>
-        
+
         <!-- Validation Messages -->
-        <div *ngIf="form.get('body')?.invalid && form.get('body')?.touched" class="error-text">
+        <div *ngIf="form.get('body')?.invalid && form.get('body')?.touched" class="text-red-600 text-sm">
           <span *ngIf="form.get('body')?.errors?.['required']">
             Comment is required
           </span>
@@ -54,26 +58,26 @@
         </div>
 
         <!-- Character Count -->
-        <div class="char-count">
-          <span [class.low]="(form.get('body')?.value?.length || 0) < 10">
+        <div class="text-right text-sm">
+          <span [class]="(form.get('body')?.value?.length || 0) < 10 ? 'text-red-600' : 'text-gray-600'">
             {{ form.get('body')?.value?.length || 0 }}/500 characters
           </span>
         </div>
       </div>
 
       <!-- Actions -->
-      <div class="form-actions">
+      <div class="flex flex-col sm:flex-row gap-4">
         <button
           type="submit"
-          class="btn btn-primary"
+          class="flex-1 bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           [disabled]="!form.valid || loading">
-          <span class="btn-icon" *ngIf="!loading">✓</span>
-          <span class="btn-loader" *ngIf="loading">⟳</span>
+          <span class="mr-2" *ngIf="!loading">✓</span>
+          <span class="mr-2 animate-spin" *ngIf="loading">⟳</span>
           {{ loading ? 'Posting...' : 'Post Comment' }}
         </button>
         <button
           type="button"
-          class="btn btn-secondary"
+          class="px-6 py-3 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors"
           (click)="cancel()">
           Cancel
         </button>
@@ -81,13 +85,13 @@
     </form>
 
     <!-- Tips -->
-    <div class="tips">
-      <h4>💡 Tips for great comments:</h4>
-      <ul>
-        <li>Be respectful and constructive</li>
-        <li>Share your genuine thoughts</li>
-        <li>Keep it relevant to the post</li>
-        <li>Minimum 10 characters required</li>
+    <div class="mt-8 bg-gray-50 rounded-lg p-6">
+      <h4 class="font-semibold text-gray-900 mb-3">💡 Tips for great comments:</h4>
+      <ul class="text-sm text-gray-600 space-y-1">
+        <li>• Be respectful and constructive</li>
+        <li>• Share your genuine thoughts</li>
+        <li>• Keep it relevant to the post</li>
+        <li>• Minimum 10 characters required</li>
       </ul>
     </div>
   </div>

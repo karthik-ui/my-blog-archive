@@ -3,13 +3,14 @@ import { FormBuilder, Validators, ReactiveFormsModule, AbstractControl, Validati
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { CommonModule } from '@angular/common';
+import { HlmButton } from '@spartan-ng/helm/button';
+import { HlmInput } from '@spartan-ng/helm/input';
 
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, RouterModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterModule, HlmButton, HlmInput],
   templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.scss'],
 })
 export class SignupComponent implements OnInit {
   form;

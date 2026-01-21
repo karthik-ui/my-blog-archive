@@ -9,7 +9,6 @@ import { RouterModule } from '@angular/router';
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './posts-list.component.html',
-  styleUrls: ['./posts-list.component.scss'],
 })
 export class PostsListComponent implements OnInit {
   private postsService = inject(PostsService);
