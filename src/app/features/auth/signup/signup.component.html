@@ -1,8 +1,154 @@
-<h2>Sign Up</h2>
-<form [formGroup]="form" (ngSubmit)="submit()">
-  <label>First Name <input formControlName="firstName" /></label>
-  <label>Last Name <input formControlName="lastName" /></label>
-  <label>Username <input formControlName="username" /></label>
-  <label>Password <input type="password" formControlName="password" /></label>
-  <button type="submit">Register</button>
-</form>
+<div class="auth-container">
+  <div class="auth-card signup-card">
+    <div class="auth-header">
+      <h1 class="auth-title">
+        <span class="icon">🎉</span>
+        Create Your Account
+      </h1>
+      <p class="auth-subtitle">Join our community and start sharing your thoughts</p>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="auth-form">
+      <!-- Success Message -->
+      <div *ngIf="submitSuccess" class="alert alert-success">
+        <span class="icon">✓</span>
+        <span>Account created successfully! Redirecting...</span>
+      </div>
+
+      <!-- Error Message -->
+      <div *ngIf="submitError" class="alert alert-error">
+        <span class="icon">⚠️</span>
+        <span>{{ submitError }}</span>
+      </div>
+
+      <!-- First Name Field -->
+      <div class="form-group">
+        <label for="firstName" class="form-label">First Name</label>
+        <div class="input-wrapper">
+          <span class="input-icon">👤</span>
+          <input
+            id="firstName"
+            type="text"
+            formControlName="firstName"
+            placeholder="John"
+            class="form-input"
+            [class.error]="form.get('firstName')?.invalid && form.get('firstName')?.touched" />
+        </div>
+        <div
+          *ngIf="form.get('firstName')?.touched"
+          class="error-text">
+          {{ getErrorMessage('firstName') }}
+        </div>
+      </div>
+
+      <!-- Last Name Field -->
+      <div class="form-group">
+        <label for="lastName" class="form-label">Last Name</label>
+        <div class="input-wrapper">
+          <span class="input-icon">👤</span>
+          <input
+            id="lastName"
+            type="text"
+            formControlName="lastName"
+            placeholder="Doe"
+            class="form-input"
+            [class.error]="form.get('lastName')?.invalid && form.get('lastName')?.touched" />
+        </div>
+        <div
+          *ngIf="form.get('lastName')?.touched"
+          class="error-text">
+          {{ getErrorMessage('lastName') }}
+        </div>
+      </div>
+
+      <!-- Username Field -->
+      <div class="form-group">
+        <label for="username" class="form-label">Username</label>
+        <div class="input-wrapper">
+          <span class="input-icon">@</span>
+          <input
+            id="username"
+            type="text"
+            formControlName="username"
+            placeholder="johndoe"
+            class="form-input"
+            [class.error]="form.get('username')?.invalid && form.get('username')?.touched" />
+        </div>
+        <div
+          *ngIf="form.get('username')?.touched"
+          class="error-text">
+          {{ getErrorMessage('username') }}
+        </div>
+      </div>
+
+      <!-- Password Field -->
+      <div class="form-group">
+        <label for="password" class="form-label">Password</label>
+        <div class="input-wrapper">
+          <span class="input-icon">🔑</span>
+          <input
+            id="password"
+            type="password"
+            formControlName="password"
+            placeholder="At least 6 characters"
+            class="form-input"
+            [class.error]="form.get('password')?.invalid && form.get('password')?.touched" />
+        </div>
+        <div
+          *ngIf="form.get('password')?.touched"
+          class="error-text">
+          {{ getErrorMessage('password') }}
+        </div>
+      </div>
+
+      <!-- Password Confirm Field -->
+      <div class="form-group">
+        <label for="passwordConfirm" class="form-label">Confirm Password</label>
+        <div class="input-wrapper">
+          <span class="input-icon">🔐</span>
+          <input
+            id="passwordConfirm"
+            type="password"
+            formControlName="passwordConfirm"
+            placeholder="Re-enter your password"
+            class="form-input"
+            [class.error]="(form.get('passwordConfirm')?.invalid && form.get('passwordConfirm')?.touched) || passwordMismatchError" />
+        </div>
+        <div
+          *ngIf="form.get('passwordConfirm')?.touched"
+          class="error-text">
+          {{ getErrorMessage('passwordConfirm') }}
+        </div>
+        <div
+          *ngIf="passwordMismatchError"
+          class="error-text">
+          Passwords do not match
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="btn-submit" [disabled]="!form.valid || submitSuccess">
+        <span class="btn-icon" *ngIf="!submitSuccess">✓</span>
+        <span class="btn-icon" *ngIf="submitSuccess">⟳</span>
+        {{ submitSuccess ? 'Creating account...' : 'Create Account' }}
+      </button>
+    </form>
+
+    <!-- Login Link -->
+    <div class="auth-footer">
+      <p>
+        Already have an account?
+        <a routerLink="/auth/login" class="auth-link">Login here</a>
+      </p>
+    </div>
+
+    <!-- Requirements -->
+    <div class="requirements">
+      <p class="requirements-title">Password Requirements:</p>
+      <ul>
+        <li>At least 6 characters long</li>
+        <li>Must match confirmation password</li>
+      </ul>
+    </div>
+  </div>
+</div>

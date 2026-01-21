@@ -1,11 +1,99 @@
-<div *ngIf="post">
-  <h2>{{ post.title }}</h2>
-  <p>{{ post.body }}</p>
-</div>
+<div class="post-details-container">
+  <!-- Back Button -->
+  <div class="back-button">
+    <a routerLink="/posts" class="back-link">
+      <span class="icon">←</span>
+      Back to Posts
+    </a>
+  </div>
 
-<h3>Comments</h3>
-<ul>
-  <li *ngFor="let c of comments; trackBy: trackBy">
-    <strong>{{ c.name }}</strong>: {{ c.body }}
-  </li>
-</ul>
+  <!-- Post Content -->
+  <div *ngIf="loading" class="post-loading">
+    <div class="skeleton-header"></div>
+    <div class="skeleton-body"></div>
+  </div>
+
+  <div *ngIf="!loading && post" class="post-content">
+    <article class="post-article">
+      <header class="post-header">
+        <h1 class="post-title">{{ post.title }}</h1>
+        <div class="post-meta">
+          <span class="meta-item">
+            <span class="meta-icon">📝</span>
+            Post #{{ postId }}
+          </span>
+          <span class="meta-item">
+            <span class="meta-icon">👤</span>
+            By User #{{ post.userId }}
+          </span>
+        </div>
+      </header>
+
+      <div class="post-body">
+        {{ post.body }}
+      </div>
+
+      <div class="post-actions">
+        <a [routerLink]="['/posts', postId, 'comment']" class="btn-add-comment">
+          <span class="btn-icon">💬</span>
+          Add Comment
+        </a>
+      </div>
+    </article>
+  </div>
+
+  <div *ngIf="!loading && !post" class="post-error">
+    <p>Post not found</p>
+  </div>
+
+  <!-- Comments Section -->
+  <section class="comments-section">
+    <h2 class="comments-title">
+      <span class="comments-icon">💬</span>
+      Comments ({{ comments.length }})
+    </h2>
+
+    <!-- Loading State -->
+    <div *ngIf="loading" class="comments-loading">
+      <div class="comment-skeleton" *ngFor="let item of [1, 2, 3]">
+        <div class="skeleton-avatar"></div>
+        <div class="skeleton-content">
+          <div class="skeleton-name"></div>
+          <div class="skeleton-body"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comments List -->
+    <div *ngIf="!loading" class="comments-list">
+      <article 
+        *ngFor="let comment of comments; trackBy: trackBy"
+        class="comment"
+        [class.local-comment]="comment.isLocal">
+        <div class="comment-header">
+          <div class="comment-avatar">
+            {{ comment.name[0] }}
+          </div>
+          <div class="comment-user-info">
+            <h4 class="comment-name">{{ comment.name }}</h4>
+            <p class="comment-email">{{ comment.email }}</p>
+            <span *ngIf="comment.isLocal" class="badge-new">Just added</span>
+          </div>
+        </div>
+        <div class="comment-body">
+          {{ comment.body }}
+        </div>
+      </article>
+
+      <!-- Empty State -->
+      <div *ngIf="comments.length === 0" class="empty-comments">
+        <div class="empty-icon">💭</div>
+        <h3>No comments yet</h3>
+        <p>Be the first to comment on this post!</p>
+        <a [routerLink]="['/posts', postId, 'comment']" class="btn-primary-empty">
+          Add Comment
+        </a>
+      </div>
+    </div>
+  </section>
+</div>

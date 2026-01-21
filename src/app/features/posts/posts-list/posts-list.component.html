@@ -1,12 +1,71 @@
-<h2>Blog Posts</h2>
-<ul>
-  <li *ngFor="let post of posts$ | async; trackBy: trackBy">
-    <a [routerLink]="['/posts', post.id]">{{ post.title }}</a>
-  </li>
-</ul>
+<div class="posts-container">
+  <div class="posts-header">
+    <h1 class="posts-title">Blog Archive</h1>
+    <p class="posts-subtitle">Discover amazing articles and stories</p>
+  </div>
 
-<div class="pagination">
-  <button (click)="prev()" [disabled]="page === 1">Previous</button>
-  <span>Page {{ page }}</span>
-  <button (click)="next()">Next</button>
+  <!-- Loading State -->
+  <div *ngIf="!(posts$ | async); else postsList" class="loading-skeleton">
+    <div *ngFor="let item of [1, 2, 3, 4, 5]" class="skeleton-card">
+      <div class="skeleton-header"></div>
+      <div class="skeleton-body"></div>
+      <div class="skeleton-footer"></div>
+    </div>
+  </div>
+
+  <ng-template #postsList>
+    <!-- Posts Grid -->
+    <div class="posts-grid">
+      <article 
+        *ngFor="let post of posts$ | async; trackBy: trackBy"
+        class="post-card"
+        [attr.data-post-id]="post.id">
+        <div class="post-header">
+          <div class="post-badge">Article</div>
+          <span class="post-id">#{{ post.id }}</span>
+        </div>
+        <h2 class="post-title">
+          <a [routerLink]="['/posts', post.id]" class="post-link">
+            {{ post.title }}
+          </a>
+        </h2>
+        <p class="post-body">{{ post.body | slice:0:150 }}...</p>
+        <div class="post-footer">
+          <div class="post-meta">
+            <span class="meta-icon">📝</span>
+            <span class="meta-text">Post by User #{{ post.userId }}</span>
+          </div>
+          <a [routerLink]="['/posts', post.id]" class="read-more">
+            Read More
+            <span class="arrow">→</span>
+          </a>
+        </div>
+      </article>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination-container">
+      <button 
+        class="pagination-btn prev-btn"
+        (click)="prev()" 
+        [disabled]="page === 1"
+        aria-label="Previous page">
+        <span class="arrow-icon">←</span>
+        <span class="btn-text">Previous</span>
+      </button>
+
+      <div class="pagination-info">
+        <span class="page-number">Page: <span [textContent]="page"></span></span>
+        <span class="total-info">Showing 10 posts per page</span>
+      </div>
+
+      <button 
+        class="pagination-btn next-btn"
+        (click)="next()"
+        aria-label="Next page">
+        <span class="btn-text">Next</span>
+        <span class="arrow-icon">→</span>
+      </button>
+    </div>
+  </ng-template>
 </div>

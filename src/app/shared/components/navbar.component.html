@@ -1,6 +1,62 @@
-<nav class="navbar">
-  <a routerLink="/posts" routerLinkActive="active">Posts</a>
-  <a routerLink="/albums" routerLinkActive="active">Albums</a>
-  <a routerLink="/auth/login" routerLinkActive="active">Login</a>
-  <a routerLink="/auth/signup" routerLinkActive="active">Signup</a>
+<nav class="navbar" role="navigation" aria-label="Main navigation">
+  <div class="navbar-container">
+    <!-- Brand/Logo -->
+    <div class="navbar-brand">
+      <a routerLink="/posts" class="logo">
+        <span class="logo-icon">📝</span>
+        <span class="logo-text">BlogArchive</span>
+      </a>
+    </div>
+
+    <!-- Hamburger Menu -->
+    <button 
+      class="hamburger" 
+      [class.active]="isOpen"
+      (click)="toggleMenu()"
+      aria-label="Toggle navigation"
+      aria-expanded="isOpen"
+      aria-controls="navbarMenu">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+
+    <!-- Navigation Links -->
+    <div class="navbar-menu" [class.active]="isOpen" id="navbarMenu">
+      <div class="navbar-nav">
+        <a routerLink="/posts" routerLinkActive="active" (click)="isOpen = false" class="nav-link">
+          <span class="nav-icon">📄</span>
+          Posts
+        </a>
+      </div>
+
+      <!-- User Section -->
+      <div class="navbar-user">
+        <div *ngIf="(user$ | async) as user; else notLoggedIn" class="user-menu">
+          <div class="user-info">
+            <div class="avatar">{{ getUserInitials() }}</div>
+            <div class="user-details">
+              <span class="user-name">{{ user.firstName }} {{ user.lastName }}</span>
+              <span class="user-handle">@{{ user.username }}</span>
+            </div>
+          </div>
+          <button (click)="logout()" class="btn-logout">
+            <span class="logout-icon">🚪</span>
+            Logout
+          </button>
+        </div>
+
+        <ng-template #notLoggedIn>
+          <div class="auth-links">
+            <a routerLink="/auth/login" routerLinkActive="active" (click)="isOpen = false" class="btn-secondary">
+              Login
+            </a>
+            <a routerLink="/auth/signup" routerLinkActive="active" (click)="isOpen = false" class="btn-primary">
+              Sign Up
+            </a>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
 </nav>

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PostsService } from '../posts.service';
 import { trackById } from 'src/app/shared/utils/track-by';
@@ -11,7 +11,7 @@ import { RouterModule } from '@angular/router';
   templateUrl: './posts-list.component.html',
   styleUrls: ['./posts-list.component.scss'],
 })
-export class PostsListComponent {
+export class PostsListComponent implements OnInit {
   private postsService = inject(PostsService);
   posts$ = this.postsService.posts$;
   page = 1;

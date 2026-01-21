@@ -1,8 +1,94 @@
-<h3>Add a Comment</h3>
-<form [formGroup]="form" (ngSubmit)="submit()">
-  <textarea formControlName="body" placeholder="Write your comment..."></textarea>
-  <button type="submit">Submit</button>
-</form>
+<div class="add-comment-container">
+  <!-- Back Button -->
+  <a href="javascript:void(0)" (click)="cancel()" class="back-link">
+    <span class="icon">←</span>
+    Back to Post
+  </a>
 
-<div *ngIf="success" class="success">{{ success }}</div>
-<div *ngIf="error" class="error">{{ error }}</div>
+  <!-- Post Context -->
+  <div *ngIf="post" class="post-context">
+    <p class="context-label">Commenting on:</p>
+    <h2 class="post-title">{{ post.title }}</h2>
+  </div>
+
+  <!-- Add Comment Form -->
+  <div class="comment-form-wrapper">
+    <h1 class="form-title">
+      <span class="icon">💬</span>
+      Share Your Thoughts
+    </h1>
+    <p class="form-subtitle">Your comment will appear at the top of the comments section</p>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="comment-form">
+      <!-- Error Message -->
+      <div *ngIf="error" class="alert alert-error" @slideDown>
+        <span class="alert-icon">⚠️</span>
+        <span class="alert-message">{{ error }}</span>
+      </div>
+
+      <!-- Success Message -->
+      <div *ngIf="success" class="alert alert-success" @slideDown>
+        <span class="alert-icon">✓</span>
+        <span class="alert-message">{{ success }}</span>
+      </div>
+
+      <!-- Textarea -->
+      <div class="form-group">
+        <label for="body" class="form-label">Your Comment</label>
+        <textarea
+          id="body"
+          formControlName="body"
+          placeholder="Share your thoughts about this post... (minimum 10 characters)"
+          class="form-textarea"
+          [class.error]="form.get('body')?.invalid && form.get('body')?.touched"
+          rows="8"></textarea>
+        
+        <!-- Validation Messages -->
+        <div *ngIf="form.get('body')?.invalid && form.get('body')?.touched" class="error-text">
+          <span *ngIf="form.get('body')?.errors?.['required']">
+            Comment is required
+          </span>
+          <span *ngIf="form.get('body')?.errors?.['minlength']">
+            Comment must be at least 10 characters
+          </span>
+        </div>
+
+        <!-- Character Count -->
+        <div class="char-count">
+          <span [class.low]="(form.get('body')?.value?.length || 0) < 10">
+            {{ form.get('body')?.value?.length || 0 }}/500 characters
+          </span>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="form-actions">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="!form.valid || loading">
+          <span class="btn-icon" *ngIf="!loading">✓</span>
+          <span class="btn-loader" *ngIf="loading">⟳</span>
+          {{ loading ? 'Posting...' : 'Post Comment' }}
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="cancel()">
+          Cancel
+        </button>
+      </div>
+    </form>
+
+    <!-- Tips -->
+    <div class="tips">
+      <h4>💡 Tips for great comments:</h4>
+      <ul>
+        <li>Be respectful and constructive</li>
+        <li>Share your genuine thoughts</li>
+        <li>Keep it relevant to the post</li>
+        <li>Minimum 10 characters required</li>
+      </ul>
+    </div>
+  </div>
+</div>
