@@ -1,0 +1,6 @@
+<h2>Albums</h2>
+<div class="grid">
+  <div *ngFor="let album of albums; trackBy: trackBy">
+    <a [routerLink]="['/albums', album.id]">{{ album.title }}</a>
+  </div>
+</div>

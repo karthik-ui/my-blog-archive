@@ -1,0 +1,10 @@
+<h2>Album Photos</h2>
+<div class="photos">
+  <img *ngFor="let photo of photos; trackBy: trackBy" [src]="photo.thumbnailUrl" [alt]="photo.title" />
+</div>
+
+<div class="pagination">
+  <button (click)="prev()" [disabled]="page === 1">Previous</button>
+  <span>Page {{ page }}</span>
+  <button (click)="next()">Next</button>
+</div>

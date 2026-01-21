@@ -1,0 +1,12 @@
+<h2>Blog Posts</h2>
+<ul>
+  <li *ngFor="let post of posts$ | async; trackBy: trackBy">
+    <a [routerLink]="['/posts', post.id]">{{ post.title }}</a>
+  </li>
+</ul>
+
+<div class="pagination">
+  <button (click)="prev()" [disabled]="page === 1">Previous</button>
+  <span>Page {{ page }}</span>
+  <button (click)="next()">Next</button>
+</div>
